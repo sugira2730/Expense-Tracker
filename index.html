@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ERIC'S EXPENSES TRACKER </title>
+</head>
+<body>
+    <h1>ERIC'S EXPENSES TRACKER </h1>
+
+<h2>INCOME</h2> 
+<div class="input-section">
+
+
+    <label for="amount-input">ACCOUNTS: </label>   
+    <select id="category-select">
+        <option value="Bank of kigali">Bank of kigali Acc</option>
+        <option value="cogebanque">cogebanque Acc</option>
+        <option value="Ecobank">Ecobank Acc</option>
+        <option value="Equity">Equity Acc</option>
+        <option value="Equity">Mobile Money Acc</option>
+        <option value="Equity">Cash Acc</option>
+
+
+        
+    </select>
+    <input type="number" id="amount-input">
+</div>
+ <h3>EXPENSES</h3>   
+
+    <div class="input-section">
+
+
+        <label for="category-select"> Category:</label>
+        <select id="category-select">
+            <option value="clothes ">clothes </option>
+            <option value="drinks">drinks</option>
+            <option value="Airtime">Airtime</option>
+            <option value="Gifts">Gifts</option>
+            <option value="Rents">Rents</option>
+            <option value="Transports">Transports</option>
+            <option value="Traveling">Traveling</option>
+            <option value="church">church</option>
+        </select>
+        <label for="amount-input">Amount:</label>
+        <input type="number" id="amount-input">
+        <label for="date-input">Date:</label>
+        <input type="date" id="date-input">
+        <button id="add-btn">Add</button>
+    </div>
+    <div class="expenses-list">
+        <h4>Expenses List</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="expnese-table-body">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total:</td>
+                    <td id="total-amount"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

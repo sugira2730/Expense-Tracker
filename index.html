@@ -2,78 +2,210 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eric's Expense Tracker - Code of Africa GmbH</title>
     <link rel="stylesheet" href="style.css">
-    <title>ERIC'S EXPENSES TRACKER </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
 <body>
-    <h1>ERIC'S EXPENSES TRACKER </h1>
+    <div class="container">
+        <header>
+            <h1>Eric's income And Expenses Tracker</h1>
+            <div class="date-filter">
+                <label>Date Range:</label>
+                <input type="date" id="start-date">
+                <input type="date" id="end-date">
+                <button id="filter-btn" class="btn">Filter</button>
+            </div>
+        </header>
 
-<h2>INCOME</h2> 
-<div class="input-section">
+        <div class="dashboard-grid">
+            <!-- Summary Cards -->
+            <div class="card summary-card">
+                <h2>Accounts Summary</h2>
+                <div class="account-balances">
+                    <div class="balance-item">
+                        <h3>Bank Account</h3>
+                        <span id="bank-balance">$0.00</span>
+                    </div>
+                    <div class="balance-item">
+                        <h3>Mobile Money</h3>
+                        <span id="mobile-balance">$0.00</span>
+                    </div>
+                    <div class="balance-item">
+                        <h3>Cash</h3>
+                        <span id="cash-balance">$0.00</span>
+                    </div>
+                </div>
+                <div class="total-summary">
+                    <div class="summary-item">
+                        <strong>Total Income:</strong>
+                        <span id="total-income">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Total Expenses:</strong>
+                        <span id="total-expenses">$0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Net Balance:</strong>
+                        <span id="net-balance">$0.00</span>
+                    </div>
+                </div>
+                <button class="btn" id="generate-report-btn">Generate Report</button>
+            </div>
 
+            <!-- Transaction Form -->
+            <div class="card">
+                <h2>Eric's Transactions</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label>Account</label>
+                        <select id="account-select" required>
+                        </select>
+                    </div>
 
-    <label for="amount-input">ACCOUNTS: </label>   
-    <select id="category-select">
-        <option value="Bank of kigali">Bank of kigali Acc</option>
-        <option value="cogebanque">cogebanque Acc</option>
-        <option value="Ecobank">Ecobank Acc</option>
-        <option value="Equity">Equity Acc</option>
-        <option value="Equity">Mobile Money Acc</option>
-        <option value="Equity">Cash Acc</option>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="type-select" required>
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </select>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="category-select" required>
+                                <option value="">Select Category</option>
+                            </select>
+                            <button type="button" id="add-category-btn" class="btn-small">+</button>
+                        </div>
 
-        
-    </select>
-    <input type="number" id="amount-input">
-</div>
- <h3>EXPENSES</h3>   
+                        <div class="form-group">
+                            <label>Subcategory</label>
+                            <select id="subcategory-select">
+                                <option value="">Select Subcategory</option>
+                            </select>
+                            <button type="button" id="add-subcategory-btn" class="btn-small">+</button>
+                        </div>
+                    </div>
 
-    <div class="input-section">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="amount-input" required step="0.01">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="date-input" required>
+                    </div>
 
-        <label for="category-select"> Category:</label>
-        <select id="category-select">
-            <option value="clothes ">clothes </option>
-            <option value="drinks">drinks</option>
-            <option value="Airtime">Airtime</option>
-            <option value="Gifts">Gifts</option>
-            <option value="Rents">Rents</option>
-            <option value="Transports">Transports</option>
-            <option value="Traveling">Traveling</option>
-            <option value="church">church</option>
-        </select>
-        <label for="amount-input">Amount:</label>
-        <input type="number" id="amount-input">
-        <label for="date-input">Date:</label>
-        <input type="date" id="date-input">
-        <button id="add-btn">Add</button>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="description-input">
+                    </div>
+
+                    <button type="submit" class="btn">Add Transaction</button>
+                </form>
+            </div>
+
+            <!-- Budget Management -->
+            <div class="card">
+                <h2>Budget Management</h2>
+                <form id="budget-form">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="budget-category-select" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Monthly Budget</label>
+                        <input type="number" id="budget-amount-input" required step="0.01">
+                    </div>
+
+                    <button type="submit" class="btn">Set Budget</button>
+                </form>
+                
+                <div class="budget-status">
+                    <h3>Budget Status</h3>
+                    <div id="budget-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="card">
+                <h2>Expense Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="expense-chart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Income vs Expenses</h2>
+                <div class="chart-container">
+                    <canvas id="balance-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="card">
+            <h2>Transactions History</h2>
+            <div class="table-responsive">
+                <table id="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Account</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="expenses-list">
-        <h4>Expenses List</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody id="expnese-table-body">
 
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>Total:</td>
-                    <td id="total-amount"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
+    <!-- Modals -->
+    <div id="category-modal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Category</h3>
+            <form id="category-form">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" id="new-category-input" required>
+                </div>
+                <button type="submit" class="btn">Add Category</button>
+                <button type="button" class="btn btn-cancel">Cancel</button>
+            </form>
+        </div>
     </div>
+
+    <div id="subcategory-modal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Subcategory</h3>
+            <form id="subcategory-form">
+                <div class="form-group">
+                    <label>Parent Category</label>
+                    <select id="parent-category-select" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Subcategory Name</label>
+                    <input type="text" id="new-subcategory-input" required>
+                </div>
+                <button type="submit" class="btn">Add Subcategory</button>
+                <button type="button" class="btn btn-cancel">Cancel</button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

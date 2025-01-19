@@ -1,4 +1,4 @@
-/* Eric's Css Styles */
+/* Eric's income and Expense Css code Styles for UI */
 :root {
   --primary-color: #000000;
   --secondary-color: #23b478;
@@ -29,7 +29,7 @@ body {
   padding: 20px;
 }
 
-/* Header Styles */
+/* Eric's income and Expense Css Header Styles */
 header {
   display: flex;
   justify-content: space-between;
@@ -43,7 +43,7 @@ header {
   align-items: center;
 }
 
-/* Card Styles */
+/* Eric's income and Expense Css Card Styles */
 .card {
   background-color: var(--card-background);
   border-radius: 8px;
@@ -59,7 +59,7 @@ header {
   margin-bottom: 30px;
 }
 
-/* Summary Card Styles */
+/* Eric's income and Expense Css Summary Card Styles */
 .summary-card {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
@@ -87,7 +87,7 @@ header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Form Styles */
+/* Eric's income and Expense Css Form Styles */
 .form-group {
   margin-bottom: 15px;
 }
@@ -112,7 +112,7 @@ input, select {
   font-size: 14px;
 }
 
-/* Button Styles */
+/* Eric's income and Expense Css Button Styles */
 .btn {
   padding: 8px 16px;
   border: none;
@@ -137,7 +137,7 @@ input, select {
   background-color: var(--danger-color);
 }
 
-/* Charts Section */
+/* Eric's income and Expense Css Charts Section */
 .charts-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -147,25 +147,25 @@ input, select {
 
 .card {
   position: relative;
-  overflow: hidden; /* Ensure content like charts do not overflow the card */
+  overflow: hidden; /* Eric's income and Expense Css Ensure content like charts do not overflow the card */
 }
 
 .chart-container {
   position: relative;
-  width: 100%; /* Ensure the chart fits within the card */
-  height: 300px; /* Set a fixed height for consistent layout */
-  overflow: hidden; /* Prevent any chart overflow */
+  width: 100%; /* To Ensure the chart fits within the card */
+  height: 300px; /* To Set a fixed height for consistent layout */
+  overflow: hidden; /* Here To Prevent any chart overflow */
 }
 
 canvas {
   display: block;
-  max-width: 100%; /* Limit canvas width */
-  height: 100%; /* Scale the canvas height */
-  margin: 0 auto; /* Center the canvas horizontally */
+  max-width: 100%; /* To Limit canvas width */
+  height: 100%; /*To Scale the canvas height */
+  margin: 0 auto; /* To Center the canvas horizontally */
 }
 
 
-/* Table Styles */
+/* Eric's income and Expense CssTable Styles */
 .table-responsive {
   overflow-x: auto;
 }
@@ -187,7 +187,7 @@ th {
   color: white;
 }
 
-/* Modal Styles */
+/* Eric's income and Expense Css category and subCatery Styles */
 .modal {
   display: none;
   position: fixed;
@@ -209,7 +209,7 @@ th {
   border-radius: 8px;
 }
 
-/* Budget Progress Styles */
+/* Eric's income and Expense Css Budget Progress Styles */
 .budget-progress {
   margin-top: 20px;
 }
@@ -236,7 +236,7 @@ th {
   background-color: var(--danger-color);
 }
 
-/* Responsive Design */
+/* Eric's income and Expense Css Responsive Design */
 @media (max-width: 768px) {
   .dashboard-grid {
       grid-template-columns: 1fr;

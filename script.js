@@ -1,3 +1,4 @@
+//Eric's Income And Expenses Trcker Js script Codes Below:
 document.addEventListener('DOMContentLoaded', () => {
   const transactions = [];
   const budgets = {};
@@ -5,13 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     expense: {},
     income: {},
   };
-
   const accounts = {
     bank: { name: "Bank Account", type: "bank", balance: 0 },
     mobile: { name: "Mobile Money", type: "mobile", balance: 0 },
     cash: { name: "Cash", type: "cash", balance: 0 },
   };
-
   const categories = {
     expense: [
       { name: "Food", subcategories: ["Groceries", "Restaurants", "Snacks"] },
@@ -21,11 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     income: [
       { name: "Salary", subcategories: ["Base", "Wages", "Overtime"] },
       { name: "Investments", subcategories: ["Dividends", "Interest", "Capital Gains"] },
-      { name: "Other", subcategories: ["Gifts", "Freelance", "Rental"] },
+      { name: "Other", subcategories: ["Gifts", "land", "Rent","Inhertance"] },
     ],
   };
-
-  // DOM Elements
+  // Here we declare DOM(Documents Of Objects Model) Elements
   const accountSelect = document.getElementById('account-select');
   const categorySelect = document.getElementById('category-select');
   const subcategorySelect = document.getElementById('subcategory-select');
@@ -42,17 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const balanceChartCtx = document.getElementById('balance-chart').getContext('2d');
   const budgetProgressDiv = document.getElementById('budget-progress');
 
-   // Initialize charts
-   const expenseChart = new Chart(expenseChartCtx, {
+  // Initialize charts
+  const expenseChart = new Chart(expenseChartCtx, { 
     type: 'pie',
     data: { labels: [], datasets: [{ data: [], backgroundColor: [] }] },
   });
-
   const balanceChart = new Chart(balanceChartCtx, {
     type: 'bar',
     data: { labels: ['Income', 'Expenses'], datasets: [{ data: [0, 0], backgroundColor: ['#2ecc71', '#e74c3c'] }] },
   });
-
   // Initialize the account and category dropdowns
   function populateAccountsAndCategories() {
     Object.values(accounts).forEach(account => {
@@ -68,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-
   function updateSubcategories() {
     subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
     const selectedCategory = categorySelect.value;
@@ -83,12 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
-  // Update balances in the summary section
+  // Here we Update balances in the summary section
   function updateBalances() {
     const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
     const expenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-
     bankBalanceElem.textContent = `$${accounts.bank.balance.toFixed(2)}`;
     mobileBalanceElem.textContent = `$${accounts.mobile.balance.toFixed(2)}`;
     cashBalanceElem.textContent = `$${accounts.cash.balance.toFixed(2)}`;
@@ -96,15 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
     totalExpensesElem.textContent = `$${expenses.toFixed(2)}`;
     netBalanceElem.textContent = `$${(income - expenses).toFixed(2)}`;
   }
-
-  // Update balances in the Account Summary section
+  // Here we Update balances in the Account Summary section
   function updateAccountBalances() {
     // Reset account balances
     Object.keys(accounts).forEach(account => {
       accounts[account].balance = 0;
     });
 
-    // Recalculate balances based on transactions
+    // Here we Recalculate balances based on transactions
     transactions.forEach(transaction => {
       if (transaction.type === 'income') {
         accounts[transaction.account].balance += transaction.amount;
@@ -113,50 +105,42 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Update DOM elements
+    // Here we Update DOM(Documents of Model) elements
     bankBalanceElem.textContent = `$${accounts.bank.balance.toFixed(2)}`;
     mobileBalanceElem.textContent = `$${accounts.mobile.balance.toFixed(2)}`;
     cashBalanceElem.textContent = `$${accounts.cash.balance.toFixed(2)}`;
   }
 
-  // Update charts for data visualization
+  // Here we Update charts for data visualization
   function updateCharts() {
     const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
     const expenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-
-    // Update balance chart
+    // Here we Update balance chart
     balanceChart.data.datasets[0].data = [income, expenses];
     balanceChart.update();
-
-    // Update expense chart
+    // Here we Update expense chart
     const expenseCategories = Object.entries(chartData.expense);
     expenseChart.data.labels = expenseCategories.map(([key]) => key);
     expenseChart.data.datasets[0].data = expenseCategories.map(([, value]) => value);
     expenseChart.update();
   }
-
-  // Update overall summary
+  // He We Update overall summary
   function updateSummary() {
     const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
     const expenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-
     totalIncomeElem.textContent = `$${income.toFixed(2)}`;
     totalExpensesElem.textContent = `$${expenses.toFixed(2)}`;
     netBalanceElem.textContent = `$${(income - expenses).toFixed(2)}`;
-
     updateAccountBalances();
     updateCharts();
   }
-
-  // Update budget status
+  //Here We Update budget status
   function updateBudgetStatus() {
     budgetProgressDiv.innerHTML = '';
-
     Object.keys(budgets).forEach(category => {
       const spent = chartData.expense[category] || 0;
       const budget = budgets[category];
       const progress = Math.min((spent / budget) * 100, 100).toFixed(2);
-
       const statusDiv = document.createElement('div');
       statusDiv.innerHTML = `
         <div><strong>${category}</strong>: $${spent.toFixed(2)} / $${budget.toFixed(2)}</div>
@@ -167,8 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       budgetProgressDiv.appendChild(statusDiv);
     });
   }
-
-  // Add a transaction
+  // Add a transaction by using function add Transaction
   function addTransaction(transaction) {
     transactions.push(transaction);
 
@@ -178,14 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Budget exceeded for ${transaction.category}. Current spending: $${chartData.expense[transaction.category].toFixed(2)}.`);
       }
     }
-
     updateBalances();
     updateBudgetStatus();
     addTransactionToTable(transaction);
     updateSummary();
   }
-
-  // Add a transaction to the table
+  // Here we Add a transaction to the table
   function addTransactionToTable(transaction) {
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -207,8 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     transactionsTable.appendChild(row);
   }
-
-  // Handle form submissions
+  //This block  of code Handle form submissions
   document.getElementById('transaction-form').addEventListener('submit', e => {
     e.preventDefault();
     const transaction = {
@@ -232,12 +212,47 @@ document.addEventListener('DOMContentLoaded', () => {
     alert(`Budget set for ${category}: $${amount.toFixed(2)}`);
     updateBudgetStatus();
   });
-
-  // Event listeners for category and type changes
+  // Here we provide Event listeners for category and type changes
   categorySelect.addEventListener('change', updateSubcategories);
   typeSelect.addEventListener('change', updateSubcategories);
 
-  // Initialize
+  // Generate report functionality by sing Event Listener
+  document.getElementById('generate-report-btn').addEventListener('click', () => {
+    //Here Gather necessary data from transactions, budgets, and balances
+    const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+    const totalExpenses = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+    const netBalance = totalIncome - totalExpenses;
+    // This block  of code Prepare data for the report To Be Shown
+    let reportContent = `Financial Report\n`;
+    reportContent += `====================\n\n`;
+    reportContent += `Total Income: $${totalIncome.toFixed(2)}\n`;
+    reportContent += `Total Expenses: $${totalExpenses.toFixed(2)}\n`;
+    reportContent += `Net Balance: $${netBalance.toFixed(2)}\n\n`;
+    // This block  of code show Account balances Available at Time
+    reportContent += `Account Balances:\n`;
+    Object.entries(accounts).forEach(([account, details]) => {
+      reportContent += `${details.name}: $${details.balance.toFixed(2)}\n`;
+    });
+ reportContent += `\nTransaction Summary:\n`;
+    transactions.forEach(transaction => {
+      reportContent += `${transaction.date} | ${accounts[transaction.account]?.name || '-'} | ${transaction.type} | ${transaction.category} | ${transaction.subcategory || '-'} | $${transaction.amount.toFixed(2)}\n`;
+    });
+// This block  of code allow Budget status overview handling
+    reportContent += `\nBudget Status:\n`;
+    Object.keys(budgets).forEach(category => {
+      const spent = chartData.expense[category] || 0;
+      const budget = budgets[category];
+      const progress = Math.min((spent / budget) * 100, 100).toFixed(2);
+      reportContent += `${category}: $${spent.toFixed(2)} / $${budget.toFixed(2)} (${progress}% of budget)\n`;
+    });
+// He we Create a downloadable file (text file) to view generated report
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'financial_report.txt';
+    link.click();
+  });
+  // Here we Initialize
   populateAccountsAndCategories();
   updateSummary();
   updateBalances();
